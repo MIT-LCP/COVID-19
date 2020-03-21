@@ -1,7 +1,32 @@
 
 SELECT
   pvt.subject_id, pvt.hadm_id, pvt.icustay_id, pvt.intime,pvt.outtime, pvt.starttime, pvt.endtime
-
+  , max(GCS) as gcs_max
+  , min(GCS) as gcs_min
+  , max(GCSMotor) as gcsmotor_max
+  , min(GCSMotor) as gcsmotor_min
+  , max(GCSVerbal) as gcsverbal_max
+  , min(GCSVerbal) as gcsverbal_min
+  , max(GCSEyes) as gcseyes_max
+  , min(GCSEyes) as gcseyes_min
+  , max(EndoTrachFlag) as endo_max
+  , min(EndoTrachFlag) as endo_min  
+  , max(HeartRate) as hr_max
+  , min(HeartRate) as hr_min
+  , max(SysBP) as sysbp_max
+  ,	min(SysBP) as sysbp_min	
+  , max(DiasBP) as diasbp_max	
+  , min(DiasBP) as diasbp_min
+  , max(MeanBP) as meanbp_max
+  , min(MeanBP) as meanbp_min
+  , max(RespRate) as rr_max
+  , min(RespRate) as rr_min
+  , max(TempC)	as tempc_max
+  , min(TempC) as tempc_min	
+  , max(SpO2) as spo2_max	
+  , min(SpO2) as spo2_min
+  , max(fio2) as fio2_max	
+  , min(fio2) as fio2_min
   , min(CASE WHEN label = 'ANION GAP' THEN valuenum ELSE null END) as ANIONGAP_min
   , max(CASE WHEN label = 'ANION GAP' THEN valuenum ELSE null END) as ANIONGAP_max
   , min(CASE WHEN label = 'ALBUMIN' THEN valuenum ELSE null END) as ALBUMIN_min
@@ -121,7 +146,6 @@ FROM
     END AS valuenum
 
   FROM `mimic-dqn.dribing_pressure.1hour_duration` d
-  
   LEFT JOIN `physionet-data.mimiciii_clinical.icustays` ie
   ON  d.icustay_id = ie.icustay_id
   LEFT JOIN `physionet-data.mimiciii_clinical.labevents` le
@@ -162,5 +186,14 @@ FROM
     )
     AND valuenum IS NOT null AND valuenum > 0 -- lab values cannot be 0 and cannot be negative
 ) pvt
+left join `physionet-data.mimiciii_derived.pivoted_vital` as v
+on pvt.icustay_id = v.icustay_id
+left join `physionet-data.mimiciii_derived.pivoted_gcs` as g
+on pvt.icustay_id =g.icustay_id
+left join `physionet-data.mimiciii_derived.pivoted_fio2` as f
+on pvt.icustay_id =f.icustay_id
+where g.charttime between pvt.starttime and pvt.endtime and 
+      v.charttime between pvt.starttime and pvt.endtime and 
+      f.charttime between pvt.starttime and pvt.endtime
 GROUP BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id ,pvt.intime,pvt.outtime, pvt.starttime, pvt.endtime
 ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id, pvt.starttime
