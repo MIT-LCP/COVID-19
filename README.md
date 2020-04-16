@@ -19,6 +19,8 @@ The organization is as follows:
 
 In order to facilitate shared analysis, we have defined a common set of views/tables.
 
+**The table structure is a work in process.**
+
 Table | Content | Schema
 ----- | ----- | -----
 pivoted_bg | Blood gas measurements | TBD.
