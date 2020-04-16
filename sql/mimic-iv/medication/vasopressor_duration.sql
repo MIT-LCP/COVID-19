@@ -6,7 +6,7 @@ WITH vasomv as
     stay_id, linkorderid
     , min(starttime) as starttime
     , max(endtime) as endtime
-  from `physionet-data.mimic_derived.vasopressor`
+  from `physionet-data.mimic_covid.vasopressor`
   group by stay_id, linkorderid
 )
 , vasomv_grp as
@@ -34,4 +34,4 @@ WITH vasomv as
 select
   stay_id, starttime, endtime
 from vasomv_grp
-order by stay_id, vasonum;
+order by stay_id, starttime;
