@@ -60,7 +60,9 @@ WHERE le.itemid IN
   -- 50822, -- POTASSIUM, WHOLE BLOOD | BLOOD GAS | BLOOD | 192946
   -- 50824, -- SODIUM, WHOLE BLOOD | BLOOD GAS | BLOOD | 71503
 )
+AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
-AND valuenum IS NOT NULL AND valuenum > 0
+-- .. except anion gap.
+AND (valuenum > 0 OR itemid = 50868)
 GROUP BY le.spec_id
 ORDER BY 1, 2, 3, 4;

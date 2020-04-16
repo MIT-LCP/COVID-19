@@ -34,7 +34,7 @@ with stg_spo2 as
 select bg.*
   , ROW_NUMBER() OVER (partition by bg.hadm_id, bg.charttime order by s1.charttime DESC) as lastRowSpO2
   , s1.spo2
-from `physionet-data.mimic_derived.pivoted_bg` bg
+from `physionet-data.mimic_covid.bg` bg
 left join stg_spo2 s1
   -- same hospitalization
   on  bg.hadm_id = s1.hadm_id
@@ -62,7 +62,7 @@ select bg.*
   + coalesce( 0.08202 * lactate          ,  0.08202 *    3.06436 +    0.06038)
   + coalesce( 0.10956 * ph               ,  0.10956 *    7.36233 +   -0.00617)
   + coalesce( 0.00848 * o2flow           ,  0.00848 *    7.59362 +   -0.35803)
-  ))) as SPECIMEN_PROB
+  ))) as specimen_prob
 from stg2 bg
 left join stg_fio2 s2
   -- same patient
@@ -75,57 +75,58 @@ select
     stg3.hadm_id
   , stg3.icustay_id
   , stg3.charttime
-  , SPECIMEN -- raw data indicating sample type, only present 80% of the time
+  -- raw data indicating sample type, only present 80% of the time
+  , specimen 
   -- prediction of specimen for missing data
   , case
-        when SPECIMEN is not null then SPECIMEN
-        when SPECIMEN_PROB > 0.75 then 'ART'
-      else null end as SPECIMEN_PRED
-  , SPECIMEN_PROB
+        when specimen is not null then specimen
+        when specimen_prob > 0.75 then 'ART'
+      else null end as specimen_pred
+  , specimen_prob
 
   -- oxygen related parameters
-  , SO2, spo2 -- note spo2 is FROM `physionet-data.mimiciii_clinical.chartevents`
-  , PO2, PCO2
-  , fio2_chartevents, FIO2
-  , AADO2
+  , so2, spo2 -- note spo2 is FROM `physionet-data.mimiciii_clinical.chartevents`
+  , po2, pco2
+  , fio2_chartevents, fio2
+  , aado2
   -- also calculate AADO2
   , case
-      when  PO2 is not null
+      when  po2 is not null
         and pco2 is not null
-        and coalesce(FIO2, fio2_chartevents) is not null
-       -- multiple by 100 because FiO2 is in a % but should be a fraction
-        then (coalesce(FIO2, fio2_chartevents)/100) * (760 - 47) - (pco2/0.8) - po2
+        and coalesce(fio2, fio2_chartevents) is not null
+       -- multiple by 100 because fio2 is in a % but should be a fraction
+        then (coalesce(fio2, fio2_chartevents)/100) * (760 - 47) - (pco2/0.8) - po2
       else null
-    end as AADO2_calc
+    end as aado2_calc
   , case
-      when PO2 is not null and coalesce(FIO2, fio2_chartevents) is not null
-       -- multiply by 100 because FiO2 is in a % but should be a fraction
-        then 100*PO2/(coalesce(FIO2, fio2_chartevents))
+      when PO2 is not null and coalesce(fio2, fio2_chartevents) is not null
+       -- multiply by 100 because fio2 is in a % but should be a fraction
+        then 100*PO2/(coalesce(fio2, fio2_chartevents))
       else null
-    end as PaO2FiO2Ratio
+    end as paO2fio2ratio
   -- acid-base parameters
-  , PH, BASEEXCESS
-  , BICARBONATE, TOTALCO2
+  , ph, baseexcess
+  , bicarbonate, totalco2
 
   -- blood count parameters
-  , HEMATOCRIT
-  , HEMOGLOBIN
-  , CARBOXYHEMOGLOBIN
-  , METHEMOGLOBIN
+  , hematocrit
+  , hemoglobin
+  , carboxyhemoglobin
+  , methemoglobin
 
   -- chemistry
-  , CHLORIDE, CALCIUM
-  , TEMPERATURE
-  , POTASSIUM, SODIUM
-  , LACTATE
-  , GLUCOSE
+  , chloride, calcium
+  , temperature
+  , potassium, sodium
+  , lactate
+  , glucose
 
   -- ventilation stuff that's sometimes input
-  , INTUBATED, TIDALVOLUME, VENTILATIONRATE, VENTILATOR
-  , PEEP, O2Flow
-  , REQUIREDO2
+  -- , intubated, tidalvolume, ventilationrate, ventilator
+  -- , peep, o2flow
+  -- , requiredo2
 from stg3
 where lastRowFiO2 = 1 -- only the most recent FiO2
 -- restrict it to *only* arterial samples
-and (SPECIMEN = 'ART' or SPECIMEN_PROB > 0.75)
+and (SPECIMEN = 'ART' or specimen_prob > 0.75)
 order by hadm_id, charttime;

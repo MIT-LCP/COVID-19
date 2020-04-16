@@ -40,14 +40,14 @@ with ce as
 select
     ce.stay_id
   , ce.charttime
-  , avg(HeartRate) as HeartRate
-  , avg(SysBP) as SysBP
-  , avg(DiasBP) as DiasBP
-  , avg(MeanBP) as MeanBP
-  , avg(RespRate) as RespRate
-  , ROUND(AVG(TempC), 2) as TempC
-  , avg(SpO2) as SpO2
-  , avg(Glucose) as Glucose
+  , avg(HeartRate) as heartrate
+  , avg(SysBP) as sysbp
+  , avg(DiasBP) as diasbp
+  , avg(MeanBP) as meanbp
+  , avg(RespRate) as resprate
+  , ROUND(AVG(TempC), 2) as tempc
+  , avg(SpO2) as spo2
+  , avg(Glucose) as glucose
 from ce
 group by ce.stay_id, ce.charttime
 order by ce.stay_id, ce.charttime;
