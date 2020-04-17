@@ -19,16 +19,16 @@ The organization is as follows:
 
 In order to facilitate shared analysis, we have defined a common set of views/tables.
 
-**The table structure is a work in process.**
+**The table structure is a work in progress.**
 
 Table | Content | Schema
 ----- | ----- | -----
-pivoted_bg | Blood gas measurements | TBD.
-pivoted_bg_art | Arterial blood gas measurements | TBD.
-pivoted_lab | Laboratory measurements | TBD.
-pivoted_o2_delivery | Information regarding supplemental oxygen delivery | TBD.
-pivoted_ventilator_setting | Measurements and settings associated with non-invasive and invasive mechanical ventilation | TBD.
-pivoted_vital | Nurse validated vital sign measurements | TBD.
+bg | Blood gas measurements | TBD.
+bg_art | Arterial blood gas measurements | TBD.
+lab | Laboratory measurements | TBD.
+o2_delivery | Information regarding supplemental oxygen delivery | TBD.
+ventilator_setting | Measurements and settings associated with non-invasive and invasive mechanical ventilation | TBD.
+vitalsign | Nurse validated vital sign measurements | TBD.
 vasopressor | Administration and dose of intravenous vasopressors | TBD.
 vasopressor_duration | Duration of time for which a patient received vasopressors | TBD.
 encounter | Defines a patient stay and provides demographic information | TBD.
@@ -39,62 +39,82 @@ encounter | Defines a patient stay and provides demographic information | TBD.
 
 ##### complete_blood_count
 
-Column | Unit of measure | Description
------ | ----- | -----
-wbc | | 
-rbc | | 
-hgb | | 
-hct | | 
-mcv | | 
-mch | | 
-mchc | | 
-rdw | | 
-rdwsd | | 
-platelets | | 
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+wbc           | Numeric    |                 | 
+rbc           | Numeric    |                 | 
+hgb           | Numeric    |                 | 
+hct           | Numeric    |                 | 
+mcv           | Numeric    |                 | 
+mch           | Numeric    |                 | 
+mchc          | Numeric    |                 | 
+rdw           | Numeric    |                 | 
+rdwsd         | Numeric    |                 | 
+platelets     | Numeric    |                 | 
 
 ##### differential
 
-Column | Unit of measure | Description
------ | ----- | -----
-abs neutrophils | | 
-abs lymphocytes | | 
-abs monocytes | | 
-abs eosonophils | | 
-abs basophils | | 
-immature granulocytes | | 
-atyps | | 
-metas | | 
-nrbc | | 
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+abs neutrophils       | Numeric    |                 | 
+abs lymphocytes       | Numeric    |                 | 
+abs monocytes         | Numeric    |                 | 
+abs eosonophils       | Numeric    |                 | 
+abs basophils         | Numeric    |                 | 
+immature granulocytes | Numeric    |                 | 
+atyps                 | Numeric    |                 | 
+metas                 | Numeric    |                 | 
+nrbc                  | Numeric    |                 | 
 
 ##### red_cell_morphology
 
-Column | Unit of measure | Description
------ | ----- | -----
-rbc morph | |
-poiklo | |
-polychr | |
-ovalocy | |
-target | |
-cshisto | |
-echino | |
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+rbc morph       | Numeric    |                 | 
+poiklo       | Numeric    |                 | 
+polychr       | Numeric    |                 | 
+ovalocy       | Numeric    |                 | 
+target       | Numeric    |                 | 
+cshisto       | Numeric    |                 | 
+echino       | Numeric    |                 | 
 
 ##### coagulation
 
-Column | Unit of measure | Description
------ | ----- | -----
-PT | |
-PTT | |
-INR | |
-FIBRINOGEN | |
-D-DIMER | |
-TT | |
-REPTILASE | |
-BT | |
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+PT       | Numeric    |                 | 
+PTT       | Numeric    |                 | 
+INR       | Numeric    |                 | 
+FIBRINOGEN       | Numeric    |                 | 
+D-DIMER       | Numeric    |                 | 
+TT       | Numeric    |                 | 
+REPTILASE       | Numeric    |                 | 
+BT       | Numeric    |                 | 
 
 ### chemistry
 
-Column      | Unit of measure | Description
------------ | --------------- | -----------
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
 Albumin |
 Globulin |
 Total Protein | 
@@ -110,32 +130,43 @@ aniongap    |
 
 ##### Liver enzymes
 
-Column      | Unit of measure | Description
------------ | --------------- | -----------
-ALT | |
-AST | |
-LD/LDH | |
-AlkPhos | |
-TotalBili | |
-Direct Bilirubin | |
-Indirect Bilirubin | |
-CK/CPK | |
-Amylase | |
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+ALT       | Numeric    |                 | 
+AST       | Numeric    |                 | 
+LD/LDH       | Numeric    |                 | 
+AlkPhos       | Numeric    |                 | 
+TotalBili       | Numeric    |                 | 
+Direct Bilirubin       | Numeric    |                 | 
+Indirect Bilirubin       | Numeric    |                 | 
+CK/CPK       | Numeric    |                 | 
+Amylase       | Numeric    |                 | 
 
 ##### Cardiac Markers
 
-
-Column      | Unit of measure | Description
------------ | --------------- | -----------
-troponin-t | | 
-troponin-i | | 
-ck-mb | | 
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+troponin-t       | Numeric    |                 |  
+troponin-i       | Numeric    |                 |  
+ck-mb       | Numeric    |                 |  
 
 ##### Inflammation measures
 
-Column            | Unit of measure | Description
------------------ | --------------- | -----------
-procalcitonin     | |
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+procalcitonin           | Numeric    |                 | 
 CRP               |  |
 Interleukin-6 (send out) |  |
 
@@ -147,25 +178,28 @@ ferritin
 
 Laboratory measures from patients with the time of blood collection and the time at which the result was available.
 
-Column      | Unit of measure | Description
------------ | --------------- | -----------
-Specimen | |
-Temperature | |
-so2 | |
-pO2 | |
-pCO2 | |
-pH | |
-aado2 | |
-pafi | |
-calTCO2 | |
-Base Excess | |
-hematocrit | |
-hemoglobin | |
-carboxyhemoglobin | |
-methemoglobin | |
-chloride | |
-calcium | |
-potassium | |
-sodium | |
-lactate | |
-glucose | |
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+charttime     | Timestamp  | N/A             | Time at which the specimen was drawn from the patient.
+specimen_id   | Integer    | N/A             | Unique identifier for the specimen drawn from the patient which the measurements are derived from.
+specimen_type | Text       |                 | 
+Temperature       | Numeric    |                 | 
+so2       | Numeric    |                 | 
+pO2       | Numeric    |                 | 
+pCO2       | Numeric    |                 | 
+pH       | Numeric    |                 | 
+aado2       | Numeric    |                 | 
+pafi       | Numeric    |                 | 
+calTCO2       | Numeric    |                 | 
+Base Excess       | Numeric    |                 | 
+hematocrit       | Numeric    |                 | 
+hemoglobin       | Numeric    |                 | 
+carboxyhemoglobin       | Numeric    |                 | 
+methemoglobin       | Numeric    |                 | 
+chloride       | Numeric    |                 | 
+calcium       | Numeric    |                 | 
+potassium       | Numeric    |                 | 
+sodium       | Numeric    |                 | 
+lactate       | Numeric    |                 | 
+glucose       | Numeric    |                 | 
