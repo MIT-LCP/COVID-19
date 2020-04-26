@@ -1,7 +1,6 @@
 -- begin query that extracts the data
 SELECT
-    MAX(mrn) AS mrn
-  , MAX(subject_id) AS subject_id
+    MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(stay_id) AS stay_id
   , MAX(charttime) AS charttime
@@ -35,4 +34,4 @@ AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
 AND valuenum > 0
 GROUP BY le.spec_id
-ORDER BY mrn, charttime;
+ORDER BY subject_id, charttime;

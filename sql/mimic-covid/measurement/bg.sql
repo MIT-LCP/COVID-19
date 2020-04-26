@@ -5,8 +5,7 @@ WITH bg AS
 select 
   -- spec_id only ever has 1 measurement for each itemid
   -- so, we may simply collapse rows using MAX()
-    MAX(mrn) AS mrn
-  , MAX(subject_id) AS subject_id
+    MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(stay_id) AS stay_id
   , MAX(charttime) AS charttime
@@ -155,8 +154,7 @@ left join stg_fio2 s2
 where bg.lastRowSpO2 = 1 -- only the row with the most recent SpO2 (if no SpO2 found lastRowSpO2 = 1)
 )
 select
-  stg3.mrn
-  , stg3.subject_id
+    stg3.subject_id
   , stg3.hadm_id
   , stg3.stay_id
   , stg3.charttime
