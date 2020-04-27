@@ -21,19 +21,90 @@ In order to facilitate shared analysis, we have defined a common set of views/ta
 
 **The table structure is a work in progress.**
 
-Table | Content | Schema
------ | ----- | -----
-bg | Blood gas measurements | TBD.
-bg_art | Arterial blood gas measurements | TBD.
-lab | Laboratory measurements | TBD.
-o2_delivery | Information regarding supplemental oxygen delivery | TBD.
-ventilator_setting | Measurements and settings associated with non-invasive and invasive mechanical ventilation | TBD.
-vitalsign | Nurse validated vital sign measurements | TBD.
-vasopressor | Administration and dose of intravenous vasopressors | TBD.
-vasopressor_duration | Duration of time for which a patient received vasopressors | TBD.
-encounter | Defines a patient stay and provides demographic information | TBD.
+Table | Content
+----- | -----
+[cohort](#cohort) |  Defines `stay_id`, a single ICU stay.
+[GCS](#gcs) | Glasgow coma scale measures.
+[RASS](#rass) | Richmond Sedation Agitation Scale measurements
+[oxygen_delivery](#oxygen-delivery) | Information regarding supplemental oxygen delivery
+[ventilator_setting](#ventilator-setting) | Measurements and settings associated with non-invasive and invasive mechanical ventilation
+[vitalsign](#vitalsign) | Nurse validated vital sign measurements
+[vasopressor](#vasopressor) | Administration and dose of intravenous vasopressors
+[bg](#blood-gases) | Blood gas measurements
+[cbc](#complete_blood_count) | Counts of the number of blood cells and related measures.
+[differential](#differential) | Detailed differential counts of white blood cells
+[red cell morphology](#red_cell_morphology) | Morphology of red blood cells
+[coagulation](#coagulation) | Measures of blood coagulation
+[chemistry](#chemistry) | Electrolyte and protein counts
+[enzymes](#enzymes-and-bilirubin) | Enzymes concentrations and bilirubin concentration
+[cardiac_markers](#cardiac-markers) | Markers of cardiac function or injury
+[inflammation_measures](#inflammation-measures) | Measures of inflammation
 
 ### Detailed tables
+
+#### Cohort
+
+Must create a `stay_id`, `intime`, `outtime` triplet to assign a unique stay in the ICU for each patient. `subject_id` should uniquely define the patient.
+
+#### Charted data
+
+##### GCS
+
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+stay_id       | Integer    | N/A             | Encounter identifier.
+charttime     | Timestamp  | N/A             | Time at which the charted event was valid.
+gcs           | Integer    | N/A             | Glasgow coma scale.
+gcs_motor     | Integer    | N/A             |
+gcs_verbal    | Integer    | N/A             |
+gcs_eyes      | Integer    | N/A             |
+gcs_unable    | Integer    | N/A             | Unable to assess GCS due to sedation/intubation.
+
+##### RASS
+
+Column        | Data type | Unit of measure | Description
+------------- | --------- | --------------- | -----------
+subject_id    | Integer   | N/A             | Patient identifier.
+stay_id       | Integer   | N/A             | Encounter identifier.
+charttime     | Timestamp | N/A             | Time at which the charted event was valid.
+rass          | Integer   | N/A             | Current Richmond Agitation Sedation Scale value
+rass_target   | Integer   | N/A             | Desired Richmond Agitation Sedation Scale value
+
+##### Oxygen Delivery
+
+Column        | Data type  | Unit of measure | Description
+------------- | ---------- | --------------- | -----------
+subject_id    | Integer    | N/A             | Patient identifier.
+stay_id       | Integer    | N/A             | Encounter identifier.
+charttime     | Timestamp  | N/A             | Time at which the charted event was valid.
+o2_flow       | Numeric    | Litres/minute   | Oxygen flow provided to the patient.
+o2_flow_additional | Numeric    | Litres/minute   | Additional oxygen flow provided by one or more secondary devices.
+o2_delivery_device_1       | Numeric    | Litres/minute   | Primary oxygen delivery device.
+o2_delivery_device_2       | Numeric    | Litres/minute   | Secondary oxygen delivery device.
+o2_delivery_device_3       | Numeric    | Litres/minute   | Tertiary oxygen delivery device.
+o2_delivery_device_4       | Numeric    | Litres/minute   | Quartenary oxygen delivery device.
+
+##### Ventilator Setting
+
+Column                        | Data type   | Unit of measure | Description
+-------------------------     | ----------  | --------------- | -----------
+subject_id                    | Integer     | N/A             | Patient identifier.
+stay_id                       | Integer     | N/A             | Encounter identifier.
+charttime                     | Timestamp   | N/A             | Time at which the charted event was valid.
+respiratory_rate_set          | Numeric     | Breaths/min     | Breathing rate set by the ventilator
+respiratory_rate_spontaneous  | Numeric     | Breaths/min     | Breathing rate occuring above the set rate
+respiratory_rate_total        | Numeric     | Breaths/min     | Actual breathing rate
+minute_volume                 | Numeric     | L/min           | Litres of air inspired per minute
+tidal_volume_set              | Numeric     | mL              | Tidal volume set by the ventilator
+tidal_volume_observed         | Numeric     | mL              | Observed tidal volume
+tidal_volume_spontaneous      | Numeric     | mL              | Tidal volume of spontaneous breaths over the ventilator
+plateau_pressure              | Numeric     | cm H2O          | Maximum pressure observed in the lungs
+peep                          | Numeric     | cm H2O          | Positive end expiratory pressure
+fio2                          | Numeric     | Proportion      | Fraction of inspired oxygen in the air
+ventilator_mode               | String      | N/A             | Mode of ventilation (assist control, etc)
+ventilator_mode_hamilton      | String      | N/A             | Special mode settings for Hamilton brand ventilators
+ventilator_type               | String      | N/A             | Type of ventilator used
 
 #### Labs
 
