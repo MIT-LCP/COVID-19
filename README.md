@@ -80,10 +80,10 @@ stay_id       | Integer    | N/A             | Encounter identifier.
 charttime     | Timestamp  | N/A             | Time at which the charted event was valid.
 o2_flow       | Numeric    | Litres/minute   | Oxygen flow provided to the patient.
 o2_flow_additional | Numeric    | Litres/minute   | Additional oxygen flow provided by one or more secondary devices.
-o2_delivery_device_1       | Numeric    | Litres/minute   | Primary oxygen delivery device.
-o2_delivery_device_2       | Numeric    | Litres/minute   | Secondary oxygen delivery device.
-o2_delivery_device_3       | Numeric    | Litres/minute   | Tertiary oxygen delivery device.
-o2_delivery_device_4       | Numeric    | Litres/minute   | Quartenary oxygen delivery device.
+o2_delivery_device_1       | Numeric    | N/A   | Primary oxygen delivery device.
+o2_delivery_device_2       | Numeric    | N/A   | Secondary oxygen delivery device.
+o2_delivery_device_3       | Numeric    | N/A   | Tertiary oxygen delivery device.
+o2_delivery_device_4       | Numeric    | N/A   | Quartenary oxygen delivery device.
 
 ##### Ventilator Setting
 
