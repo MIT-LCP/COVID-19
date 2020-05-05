@@ -2,7 +2,6 @@
 SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
-  , MAX(stay_id) AS stay_id
   , MAX(charttime) AS charttime
   , le.spec_id
   -- convert from itemid into a meaningful column

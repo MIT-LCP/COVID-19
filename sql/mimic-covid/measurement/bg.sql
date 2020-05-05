@@ -7,7 +7,6 @@ select
   -- so, we may simply collapse rows using MAX()
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
-  , MAX(stay_id) AS stay_id
   , MAX(charttime) AS charttime
   -- spec_id *may* have different storetimes, so this is taking the latest
   , MAX(storetime) AS storetime
@@ -156,7 +155,6 @@ where bg.lastRowSpO2 = 1 -- only the row with the most recent SpO2 (if no SpO2 f
 select
     stg3.subject_id
   , stg3.hadm_id
-  , stg3.stay_id
   , stg3.charttime
   -- raw data indicating sample type, only present 80% of the time
   , specimen 
