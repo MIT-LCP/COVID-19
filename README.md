@@ -24,8 +24,9 @@ In order to facilitate shared analysis, we have defined a common set of views/ta
 Table | Content
 ----- | -----
 [cohort](#cohort) |  Defines `stay_id`, a single ICU stay.
-[GCS](#gcs) | Glasgow coma scale measures.
-[RASS](#rass) | Richmond Sedation Agitation Scale measurements
+[vitalsign](#vital-signs) | Glasgow coma scale measures.
+[gcs](#gcs) | Glasgow coma scale measures.
+[rass](#rass) | Richmond Sedation Agitation Scale measurements
 [oxygen_delivery](#oxygen-delivery) | Information regarding supplemental oxygen delivery
 [ventilator_setting](#ventilator-setting) | Measurements and settings associated with non-invasive and invasive mechanical ventilation
 [vitalsign](#vitalsign) | Nurse validated vital sign measurements
@@ -48,12 +49,30 @@ Must create a `stay_id`, `intime`, `outtime` triplet to assign a unique stay in 
 
 #### Charted data
 
+##### Vital signs
+
+Column            | Data type | Unit of measure     | Description
+-------------     | --------- | ------------------- | -----------
+subject_id        | Integer   | N/A                 | Patient identifier.
+charttime         | Timestamp | N/A                 | Time at which the charted event was valid.
+heart_rate        | NUMERIC   | Beats per minute    | Number of heart beats per minute.
+sbp               | NUMERIC   | mmHg                | Systolic blood pressure.
+dbp               | NUMERIC   | mmHg                | Diastolic blood pressure.
+mbp               | NUMERIC   | mmHg                | Mean blood pressure.
+sbp_ni            | NUMERIC   | mmHg                | Non-invasively recorded systolic blood pressure.
+dbp_ni            | NUMERIC   | mmHg                | Non-invasively recorded diastolic blood pressure.
+mbp_ni            | NUMERIC   | mmHg                | Non-invasively recorded mean blood pressure.
+resprate          | NUMERIC   | Breaths per minute  | Respiratory rate.
+temperature       | NUMERIC   | Degrees Celsius     | Patient body temperature.
+temperature_site  | NUMERIC   | N/A                 | Site at which the measurement is taken.
+spo2              | NUMERIC   | % (percentage)      | Peripheral oxygen saturation.
+glucose           | NUMERIC   | mg/dL               | Serum glucose measured using a fingerstick.
+
 ##### GCS
 
 Column        | Data type  | Unit of measure | Description
 ------------- | ---------- | --------------- | -----------
 subject_id    | Integer    | N/A             | Patient identifier.
-stay_id       | Integer    | N/A             | Encounter identifier.
 charttime     | Timestamp  | N/A             | Time at which the charted event was valid.
 gcs           | Integer    | N/A             | Glasgow coma scale.
 gcs_motor     | Integer    | N/A             |
