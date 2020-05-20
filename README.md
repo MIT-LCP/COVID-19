@@ -95,7 +95,6 @@ rass_target   | Integer   | N/A             | Desired Richmond Agitation Sedatio
 Column        | Data type  | Unit of measure | Description
 ------------- | ---------- | --------------- | -----------
 subject_id    | Integer    | N/A             | Patient identifier.
-stay_id       | Integer    | N/A             | Encounter identifier.
 charttime     | Timestamp  | N/A             | Time at which the charted event was valid.
 o2_flow       | Numeric    | Litres/minute   | Oxygen flow provided to the patient.
 o2_flow_additional | Numeric    | Litres/minute   | Additional oxygen flow provided by one or more secondary devices.
@@ -109,7 +108,6 @@ o2_delivery_device_4       | Numeric    | N/A   | Quartenary oxygen delivery dev
 Column                        | Data type   | Unit of measure | Description
 -------------------------     | ----------  | --------------- | -----------
 subject_id                    | Integer     | N/A             | Patient identifier.
-stay_id                       | Integer     | N/A             | Encounter identifier.
 charttime                     | Timestamp   | N/A             | Time at which the charted event was valid.
 respiratory_rate_set          | Numeric     | Breaths/min     | Breathing rate set by the ventilator
 respiratory_rate_spontaneous  | Numeric     | Breaths/min     | Breathing rate occuring above the set rate
