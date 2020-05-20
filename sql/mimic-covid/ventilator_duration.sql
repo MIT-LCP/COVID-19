@@ -47,8 +47,8 @@ WITH vs AS
       ELSE NULL END
     ) as MechVent
     , MAX(COALESCE(extubated, 0)) AS Extubated
-  FROM mimic_covid_derived_phi.ventilator_setting vs
-  LEFT JOIN mimic_covid_derived_phi.oxygen_delivery od
+  FROM mimic_covid_derived.ventilator_setting vs
+  LEFT JOIN mimic_covid_derived.oxygen_delivery od
     ON vs.subject_id = od.subject_id
     AND vs.charttime = od.charttime
   GROUP BY vs.subject_id, vs.charttime
