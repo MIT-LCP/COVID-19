@@ -22,7 +22,7 @@ with ce as
             ELSE NULL END
         -- end of fio2 cleaning
         -- begin peep cleaning
-        WHEN parameterid in (220339, 224700)
+        WHEN itemid in (220339, 224700)
         THEN
           CASE
             WHEN valuenum > 100 THEN NULL
