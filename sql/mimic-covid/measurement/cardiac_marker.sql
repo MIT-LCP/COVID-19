@@ -9,7 +9,7 @@ SELECT
   , MAX(CASE WHEN itemid = 52598 THEN value ELSE NULL END) AS troponin_i_poc
   , MAX(CASE WHEN itemid = 51003 THEN value ELSE NULL END) AS troponin_t
   , MAX(CASE WHEN itemid = 50911 THEN valuenum ELSE NULL END) AS ck_mb
-FROM mimic_covid_hosp_phi.labevents le
+FROM mimic_covid_hosp.labevents le
 WHERE le.itemid IN
 (
     51002, -- Troponin I

@@ -8,7 +8,7 @@ SELECT
   , MAX(CASE WHEN itemid = 51652 THEN valuenum ELSE NULL END) AS crp_high_sens
   , CAST(NULL AS NUMERIC) AS il6
   , CAST(NULL AS NUMERIC) AS procalcitonin
-FROM mimic_covid_hosp_phi.labevents le
+FROM mimic_covid_hosp.labevents le
 WHERE le.itemid IN
 (
     50889, -- crp

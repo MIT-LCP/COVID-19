@@ -27,7 +27,7 @@ SELECT
   , MAX(CASE WHEN itemid = 51843 THEN COALESCE(comments, value) ELSE NULL END) AS cov5
   , MAX(CASE WHEN itemid = 51844 THEN COALESCE(comments, value) ELSE NULL END) AS cov6
   , MAX(CASE WHEN itemid = 51845 THEN COALESCE(comments, value) ELSE NULL END) AS covid19
-FROM mimic_covid_hosp_phi.labevents le
+FROM mimic_covid_hosp.labevents le
 WHERE le.itemid IN
 (
 51841, -- COV1

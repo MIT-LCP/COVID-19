@@ -32,7 +32,7 @@ with ce as
     ELSE valuenum END AS valuenum
     , valueuom
     , storetime
-  FROM mimic_covid_icu_phi.chartevents ce
+  FROM mimic_covid_icu.chartevents ce
   where ce.value IS NOT NULL
   AND ce.stay_id IS NOT NULL
   AND ce.itemid IN
@@ -62,7 +62,7 @@ with ce as
       , 1 as valuenum
       , NULL AS valueuom
       , storetime
-  FROM mimic_covid_icu_phi.procedureevents
+  FROM mimic_covid_icu.procedureevents
   WHERE itemid IN
   (
       227194 -- "Extubation"

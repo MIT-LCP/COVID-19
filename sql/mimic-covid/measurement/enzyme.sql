@@ -15,7 +15,7 @@ SELECT
   , MAX(CASE WHEN itemid = 50910 THEN valuenum ELSE NULL END) AS ck_cpk
   , MAX(CASE WHEN itemid = 50911 THEN valuenum ELSE NULL END) AS ck_mb
   , MAX(CASE WHEN itemid = 50954 THEN valuenum ELSE NULL END) AS ld_ldh
-FROM mimic_covid_hosp_phi.labevents le
+FROM mimic_covid_hosp.labevents le
 WHERE le.itemid IN
 (
     50861, -- ALT
