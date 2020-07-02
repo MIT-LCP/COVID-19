@@ -2,7 +2,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 51196 THEN valuenum ELSE NULL END) AS d_dimer
   , MAX(CASE WHEN itemid = 51214 THEN valuenum ELSE NULL END) AS fibrinogen
@@ -24,5 +24,5 @@ WHERE le.itemid IN
     51275 -- PTT
 )
 AND valuenum IS NOT NULL
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY subject_id, charttime;

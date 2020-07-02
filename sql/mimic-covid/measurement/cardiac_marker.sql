@@ -3,7 +3,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 51002 THEN value ELSE NULL END) AS troponin_i
   , MAX(CASE WHEN itemid = 52598 THEN value ELSE NULL END) AS troponin_i_poc
@@ -17,5 +17,5 @@ WHERE le.itemid IN
     51003, -- Troponin T
     50911  -- Creatinine Kinase, MB isoenzyme
 )
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY subject_id, charttime;

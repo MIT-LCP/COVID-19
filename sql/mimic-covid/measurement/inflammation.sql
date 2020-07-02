@@ -2,7 +2,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 50889 THEN valuenum ELSE NULL END) AS crp
   , MAX(CASE WHEN itemid = 51652 THEN valuenum ELSE NULL END) AS crp_high_sens
@@ -17,5 +17,5 @@ WHERE le.itemid IN
 AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
 AND valuenum > 0
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY subject_id, charttime;

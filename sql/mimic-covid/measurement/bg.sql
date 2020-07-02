@@ -3,14 +3,14 @@
 WITH bg AS
 (
 select 
-  -- spec_id only ever has 1 measurement for each itemid
+  -- specimen_id only ever has 1 measurement for each itemid
   -- so, we may simply collapse rows using MAX()
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  -- spec_id *may* have different storetimes, so this is taking the latest
+  -- specimen_id *may* have different storetimes, so this is taking the latest
   , MAX(storetime) AS storetime
-  , le.spec_id
+  , le.specimen_id
   , MAX(CASE WHEN itemid = 52025 THEN value ELSE NULL END) AS specimen
   , MAX(CASE WHEN itemid = 50801 THEN valuenum ELSE NULL END) AS aado2
   , MAX(CASE WHEN itemid = 50802 THEN valuenum ELSE NULL END) AS baseexcess
@@ -77,7 +77,7 @@ where le.ITEMID in
   -- , 52411 -- sodium, WB NA +
   , 50825 -- temperature
 )
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 )
 , stg_spo2 as
 (

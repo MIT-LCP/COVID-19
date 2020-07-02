@@ -3,7 +3,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 51221 THEN valuenum ELSE NULL END) AS hematocrit
   , MAX(CASE WHEN itemid = 51222 THEN valuenum ELSE NULL END) AS hemoglobin
@@ -33,5 +33,5 @@ WHERE le.itemid IN
 AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
 AND valuenum > 0
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY subject_id, charttime;

@@ -6,7 +6,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 50862 AND valuenum <=    10 THEN valuenum ELSE NULL END) AS albumin
   , MAX(CASE WHEN itemid = 50930 AND valuenum <=    10 THEN valuenum ELSE NULL END) AS globulin
@@ -47,5 +47,5 @@ AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
 -- .. except anion gap.
 AND (valuenum > 0 OR itemid = 50868)
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY 1, 2, 3, 4;

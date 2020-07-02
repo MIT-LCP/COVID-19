@@ -2,7 +2,7 @@ SELECT
     MAX(subject_id) AS subject_id
   , MAX(hadm_id) AS hadm_id
   , MAX(charttime) AS charttime
-  , le.spec_id
+  , le.specimen_id
   -- convert from itemid into a meaningful column
   , MAX(CASE WHEN itemid = 52056 THEN valuenum ELSE NULL END) AS abs_basophils
   , MAX(CASE WHEN itemid = 52060 THEN valuenum ELSE NULL END) AS abs_eosinophils
@@ -17,7 +17,7 @@ SELECT
   , MAX(CASE WHEN itemid = 51144 THEN valuenum ELSE NULL END) AS bands
   , MAX(CASE WHEN itemid = 52122 THEN valuenum ELSE NULL END) AS imm_granulocytes
   , MAX(CASE WHEN itemid = 51251 THEN valuenum ELSE NULL END) AS metas
-  , MAX(CASE WHEN itemid = 51257 THEN valuenum ELSE NULL END) ASnrbc
+  , MAX(CASE WHEN itemid = 51257 THEN valuenum ELSE NULL END) AS nrbc
 FROM mimic_covid_hosp.labevents le
 WHERE le.itemid IN
 (
@@ -36,5 +36,5 @@ WHERE le.itemid IN
 AND valuenum IS NOT NULL
 -- lab values cannot be 0 and cannot be negative
 AND valuenum > 0
-GROUP BY le.spec_id
+GROUP BY le.specimen_id
 ORDER BY subject_id, charttime;
