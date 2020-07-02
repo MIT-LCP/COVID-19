@@ -1,26 +1,30 @@
 # set the project
-# gcloud config set project bidmc-covid-19
+gcloud config set project bidmc-covid-19
 
 export TARGET_DATASET=mimic_derived
 
-# run the MIMIC-COVID queries replacing the dataset with MIMIC-IV datasets
-export COVID_PATH='../mimic-covid'
-export DATASET_REGEX='s/mimic_covid_(.+)/mimic_\1/g'
-
 # generate tables in pivoted subfolder
-for d in hospitalstay measurement;
+for d in measurement medication;
 do
-    for fn in `ls ${COVID_PATH}/$d`;
+    for fn in `ls $d`;
     do
         # table name is file name minus extension
         tbl=`echo $fn | cut -d. -f1`
         # do not run bg_art until all other queries are run
-        if [[ tbl != 'bg_art' ]]; then
-            echo "${d}/${fn}"
-            cat ${COVID_PATH}/${d}/${fn} | sed -E $DATASET_REGEX | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.${tbl}
-        fi
+        #if [[ tbl != 'bg_art' ]]; then
+        echo "${d}/${fn}"
+        cat ${d}/${fn} | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.${tbl}
+        #fi
     done
 done
 
 # vasopressor medications also have a specific order
-# cat medication/vasopressor.sql | sed -E $DATASET_REGEX | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.vasopressor
+# cat medication/vasopressor.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.vasopressor
+# cat medication/vasopressor_duration.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.vasopressor_duration
+
+# defines stay_id and inclusion criteria for study
+# tbl='vitalsign'; cat measurement/${tbl}.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.${tbl}
+# cat measurement/covid.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.covid
+# cat cohort/cohort.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.cohort
+
+# cat hospitalstay/demographic.sql | bq query --use_legacy_sql=False --replace --destination_table=${TARGET_DATASET}.demographic

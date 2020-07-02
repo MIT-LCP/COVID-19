@@ -18,7 +18,7 @@ SELECT
   , MAX(CASE WHEN itemid = 52122 THEN valuenum ELSE NULL END) AS imm_granulocytes
   , MAX(CASE WHEN itemid = 51251 THEN valuenum ELSE NULL END) AS metas
   , MAX(CASE WHEN itemid = 51257 THEN valuenum ELSE NULL END) AS nrbc
-FROM mimic_covid_hosp.labevents le
+FROM mimic_hosp.labevents le
 WHERE le.itemid IN
 (
     52056, -- Absolute basophil count

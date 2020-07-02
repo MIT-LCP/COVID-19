@@ -20,11 +20,11 @@ SELECT
   , dgrp.dose_given_string
   , dgrp.product_amount_given
   , dgrp.product_unit
-FROM mimic_covid_hosp.emar e
+FROM mimic_hosp.emar e
 -- dose due is in the "parent" of the emar detail group
 -- where parent_field_ordinal is null
 -- only 1 of these per emar
-LEFT JOIN mimic_covid_hosp.emar_detail det
+LEFT JOIN mimic_hosp.emar_detail det
   ON e.emar_id = det.emar_id
   AND det.parent_field_ordinal IS NULL
 -- group together individual administrations to get total administered
@@ -43,7 +43,7 @@ LEFT JOIN (
         ELSE NULL END) AS product_amount_given
   , STRING_AGG(product_amount_given) AS product_amount_given_string
   , MAX(product_unit) AS product_unit
-  FROM mimic_covid_hosp.emar_detail
+  FROM mimic_hosp.emar_detail
   GROUP BY emar_id
 ) dgrp
   ON e.emar_id = dgrp.emar_id

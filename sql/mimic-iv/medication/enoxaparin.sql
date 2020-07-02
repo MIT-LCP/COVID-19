@@ -29,8 +29,7 @@ SELECT
   -- adds dose when it's missing
   , CASE
       -- once is set to be equiv to daily
-      WHEN REGEXP_CONTAINS(ph.frequency, '^(1X|X1|ONCE)') THEN 1
-      -- TODO: ASDIR (maybe Q6H?)
+      WHEN REGEXP_CONTAINS(ph.frequency, '^(1X|X1|ASDIR|ONCE)') THEN 1
       -- daily
       WHEN REGEXP_CONTAINS(ph.frequency, '^DAILY') THEN 1
       WHEN ph.frequency IN ('Q24H', 'Q 24H', 'HS', 'DINNER', 'QAM', 'QHD', 'QHS', 'QPM') THEN 1
@@ -44,46 +43,15 @@ SELECT
   -- misc info used to identify drug
   , drug
   , gsn, ndc
-FROM mimic_covid_hosp.prescriptions pr
-LEFT JOIN mimic_covid_hosp.pharmacy ph
+FROM mimic_hosp.prescriptions pr
+LEFT JOIN mimic_hosp.pharmacy ph
   ON pr.pharmacy_id = ph.pharmacy_id
   AND pr.drug = ph.medication
 WHERE pr.drug IN
 (
-
-    'Heparin',
-    'Heparin Sodium',
-    -- '5% Dextrose',
-    -- 'Heparin Flush (10 units/ml)',
-    -- 'Heparin Dwell (1000 Units/mL)',
-    -- 'Heparin Flush (100 units/ml)',
-    'Heparin Pres. Free',
-    -- 'Heparin (Hemodialysis)',
-    -- 'Heparin (CRRT Machine Priming)',
-    -- 'Heparin Flush (1000 units/mL)',
-    -- 'Heparin Flush (10 units/mL)',
-    -- 'Heparin Flush (1 unit/mL)',
-    'Heparin Sodium',
-    -- 'Heparin PF (0.5 Units/mL)',
-    -- 'Heparin Desensitization',
-    -- 'Heparin (Impella)',
-    -- 'Heparin Dwell (1000 Units/mL)',
-    -- 'Heparin Flush (1000 units/mL)',
-    'Heparin (via Anti-Xa Monitoring)',
-    'Heparin',
-    -- 'NS',
-    'Heparin Sodium',
-    -- 'Heparin (IABP)',
-    'Heparin',
-    'Heparin Pres. Free',
-    'Heparin',
-    -- 'Heparin INTRAPERITONEAL',
-    'Heparin ',
-    'Heparin Sodium',
-    -- 'Heparin CRRT',
-    -- 'Heparin Flush CRRT (5000 Units/mL)',
-    'Heparin',
-    -- 'Heparin (IABP)',
-    'Heparin Sodium'
+  'Enoxaparin Sodium', 'INV-Enoxaparin',
+  'Enoxaparin', 'Enoxaparin ', 'INV Enoxaparin',
+  'Lovenox', 'IND-Enoxaparin',
+  'Enoxaparin (Prophylaxis)', 'Enoxaparin (Treatment)'
 )
 ORDER BY subject_id, starttime, stoptime;

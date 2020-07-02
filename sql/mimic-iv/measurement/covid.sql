@@ -22,7 +22,7 @@ SELECT
   , MAX(CASE WHEN itemid = 51909 THEN value ELSE NULL END) AS cov4
   , MAX(CASE WHEN itemid = 51851 THEN value ELSE NULL END) AS cov5
   , MAX(CASE WHEN itemid = 51852 THEN value ELSE NULL END) AS cov6
-FROM mimic_covid_hosp.labevents le
+FROM mimic_hosp.labevents le
 WHERE le.itemid IN
 (
   51849, -- COV1
